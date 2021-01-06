@@ -3,6 +3,8 @@ package com.game.src.main;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,7 +15,7 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 640;
-	public static final int HEIGHT = WIDTH / 12 * 9;
+	public static final int HEIGHT = 380;
 	public static final int SCALE = 2;
 	public final String TITLE = "Space Warrior";
 	
@@ -23,8 +25,11 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 	private BufferedImage spriteSheet = null;
 	
+	private Player p;
+	private Controller c;
 	// temp
-	private BufferedImage player;
+//	private BufferedImage player;
+	
 	
 	public void init() {
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -36,8 +41,11 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 		
-		SpriteSheet ss = new SpriteSheet(spriteSheet);
-		player = ss.grabImage(1, 1, 64, 64);
+//		SpriteSheet ss = new SpriteSheet(spriteSheet);
+		p = new Player(WIDTH-36,HEIGHT-160,this);//*SPAWNPOINT* edit accordingly
+		c = new Controller(this);
+		
+		addKeyListener(new KeyInput(this));
 	}
 	
 	private synchronized void start() {
@@ -95,7 +103,8 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
-		
+		p.tick();
+		c.tick();
 	}
 	
 	private void render() {
@@ -111,11 +120,55 @@ public class Game extends Canvas implements Runnable {
 		
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 		
-		g.drawImage(player, 120, 120, this);
+		p.render(g);
+		c.render(g);
 		
 		//////////////////////
 		g.dispose();
 		bs.show();
+		
+	}
+	
+	public BufferedImage getSpriteSheet() {
+		return spriteSheet;
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		if (key==KeyEvent.VK_UP) {
+			p.setVelY(-5);
+		}
+		if (key==KeyEvent.VK_DOWN) {
+			p.setVelY(5);
+		}
+		if (key==KeyEvent.VK_LEFT) {
+			p.setVelX(-5);
+		}
+		if (key==KeyEvent.VK_RIGHT) {
+			p.setVelX(5);
+		}
+		
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		if (key==KeyEvent.VK_UP) {
+			p.setVelY(0);
+		}
+		if (key==KeyEvent.VK_DOWN) {
+			p.setVelY(0);
+		}
+		if (key==KeyEvent.VK_LEFT) {
+			p.setVelX(0);
+		}
+		if (key==KeyEvent.VK_RIGHT) {
+			p.setVelX(0);
+		}
+		if(key==KeyEvent.VK_SPACE) {
+			c.addBullet(new Bullet(p.getX(),p.getY(),this));
+		}
 		
 	}
 	
@@ -137,6 +190,7 @@ public class Game extends Canvas implements Runnable {
 		game.start();
 	}
 
+	
 	
 
 }
