@@ -3,26 +3,23 @@ package com.game.src.main;
 //import java.awt.Canvas;
 //import java.awt.Dimension;
 import java.awt.Graphics;
-//import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
+
+import com.game.src.main.classes.EntityA;
 //import java.io.IOException;
 
 
-public class Player {
-	private double x;
-	private double y;
+public class Player extends GameObject implements EntityA{
 	private double velX;
 	private double velY;
+
+	private Textures tex;
 	
-	private BufferedImage player;
-	
-	public Player(double x, double y, Game game) {
-		this.x = x;
-		this.y = y;
+	public Player(double x, double y, Textures tex) {
+		super(x,y);
+		this.tex = tex;
 		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		
-		player = ss.grabImage(1, 1, 65, 64);
+//		anim = new Animation(tex.player, 3, 3, 1, 1);
 	}
 	
 	public void tick() {
@@ -44,7 +41,11 @@ public class Player {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(player, (int)x, (int)y,null);
+		g.drawImage(tex.player, (int)x, (int)y,null);
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x, (int)y, 64, 64);
 	}
 	
 	public double getX() {
@@ -78,4 +79,6 @@ public class Player {
 	public void setVelY(double y) {
 		this.velY=y;
 	}
+
+	
 }
