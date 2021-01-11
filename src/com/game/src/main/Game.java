@@ -53,6 +53,7 @@ public class Game extends Canvas implements Runnable {
 		GAME
 	};
 	
+
 	private STATE State = STATE.MENU;
 	
 	public void setState(int x) {
@@ -181,7 +182,7 @@ public class Game extends Canvas implements Runnable {
 			c.render(g);
 			
 			g.setColor(Color.green);
-			g.fillRect(0, Game.HEIGHT*2-50, 300, 50);
+			g.fillRect(0, Game.HEIGHT*2-50, Health*3, 50);
 			g.setColor(Color.gray);
 			g.drawRect(0, Game.HEIGHT*2-50, 300, 50);
 			
