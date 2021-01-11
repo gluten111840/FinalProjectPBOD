@@ -3,26 +3,27 @@ package com.game.src.main;
 //import java.awt.Canvas;
 //import java.awt.Dimension;
 import java.awt.Graphics;
-//import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
+
+import com.game.src.main.classes.EntityA;
+import com.game.src.main.classes.EntityB;
 //import java.io.IOException;
 
 
-public class Player {
-	private double x;
-	private double y;
+public class Player extends GameObject implements EntityA{
 	private double velX;
 	private double velY;
+
+	private Textures tex;
+	private Game game;
+	private Controller c;
 	
-	private BufferedImage player;
-	
-	public Player(double x, double y, Game game) {
-		this.x = x;
-		this.y = y;
-		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		
-		player = ss.grabImage(1, 1, 65, 64);
+	public Player(double x, double y, Textures tex,Game g,Controller c) {
+		super(x,y);
+		this.tex = tex;
+		this.game = g;
+		this.c=c;
+//		anim = new Animation(tex.player, 3, 3, 1, 1);
 	}
 	
 	public void tick() {
@@ -41,10 +42,23 @@ public class Player {
 		if(y>=(Game.HEIGHT*Game.SCALE)-64) {
 			this.y=(Game.HEIGHT*Game.SCALE)-64;
 		}
+		
+		for (int i=0;i< game.eb.size();i++) {
+			EntityB tempEnt = game.eb.get(i);
+			if (Physics.Collision(this, tempEnt)) {
+				c.removeEntity(tempEnt);
+				game.setEnemy_killed(game.getEnemy_killed()+1);
+			}
+				
+		}
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(player, (int)x, (int)y,null);
+		g.drawImage(tex.player, (int)x, (int)y,null);
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x, (int)y, 64, 64);
 	}
 	
 	public double getX() {
@@ -78,4 +92,6 @@ public class Player {
 	public void setVelY(double y) {
 		this.velY=y;
 	}
+
+	
 }

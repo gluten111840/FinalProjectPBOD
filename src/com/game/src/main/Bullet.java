@@ -1,31 +1,36 @@
 package com.game.src.main;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
-public class Bullet {
-	private double x;
-	private double y;
-//	private double velX;
-//	private double velY;
+import com.game.src.main.classes.EntityA;
+
+public class Bullet extends GameObject implements EntityA {
 	
-	private BufferedImage image;
+	private Textures tex;
+	private Game game;
 	
-	
-	public Bullet(double x, double y,Game game) {
-		this.x=x;
-		this.y=y;
-		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		image = ss.grabImage(2, 1, 64, 64);
+	public Bullet(double x, double y,Textures tex, Game game) {
+		super(x,y);
+		this.tex = tex;
+		this.game = game;
 	}
 	
 	public void tick() {
 		this.y-=5;
+		
+//		if(Physics.Collision(this, game.eb)) {			//edit parameter
+//			System.out.println("COLLISION DETECTED");
+//		}
+		
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(image, (int)x,(int)y,null);
+		g.drawImage(tex.missile, (int)x,(int)y,null);
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x+28, (int)y, 4, 32);
 	}
 	
 	public double getX() {
@@ -41,6 +46,7 @@ public class Bullet {
 	}
 	
 	public void setY(double y) {
-		this.y=y;
+		this.y = y;
 	}
+
 }
