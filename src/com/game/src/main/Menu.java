@@ -1,17 +1,5 @@
 package com.game.src.main;
 
-<<<<<<< HEAD
-import java.awt.Graphics;
-
-public class Menu {
-
-	public Menu() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public void render(Graphics g) {
-		
-=======
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -34,7 +22,7 @@ public class Menu {
 		Font fnt = new Font("arial",Font.BOLD,50);
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Space Gaem", Game.WIDTH-160, 150);
+		g.drawString("Space Warrior", Game.WIDTH-160, 150);
 		g.drawString("Play", playButton.x+25, playButton.y+45);
 		g.drawString("Help", playButton.x+25, helpButton.y+45);
 		g.drawString("Quit", playButton.x+25, quitButton.y+45);
@@ -42,7 +30,6 @@ public class Menu {
 		g2d.draw(playButton);
 		g2d.draw(helpButton);
 		g2d.draw(quitButton);
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	}
 
 }

@@ -32,13 +32,10 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background = null;
 	
 	private boolean is_shooting = false;
-<<<<<<< HEAD
-=======
 	private boolean is_movingRight = false;
 	private boolean is_movingLeft = false;
 	private boolean is_movingUp = false;
 	private boolean is_movingDown = false;
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	
 	private int enemy_count = 5;
 	private int enemy_killed = 0;
@@ -50,15 +47,6 @@ public class Game extends Canvas implements Runnable {
 	
 	public LinkedList<EntityA> ea;
 	public LinkedList<EntityB> eb;
-<<<<<<< HEAD
-	
-	private enum STATE{
-		MENU,
-		GAME
-	};
-	
-	private STATE State = STATE.MENU;
-=======
 	
 	private enum STATE{
 		MENU,
@@ -76,7 +64,6 @@ public class Game extends Canvas implements Runnable {
 			this.State=STATE.MENU;
 		}
 	}
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	
 	public void init() {
 		requestFocus();
@@ -93,23 +80,15 @@ public class Game extends Canvas implements Runnable {
 		tex = new Textures(this);
 		
 //		SpriteSheet ss = new SpriteSheet(spriteSheet);
-<<<<<<< HEAD
-		p = new Player(WIDTH-36,HEIGHT-160,tex);//*SPAWNPOINT* edit accordingly
-		c = new Controller(tex, this);
-=======
 		c = new Controller(tex, this);
 		p = new Player(WIDTH-36,HEIGHT-160,tex,this,c);//*SPAWNPOINT* edit accordingly
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		menu = new Menu();
 		
 		ea = c.getEntityA();
 		eb = c.getEntityB();
 		
 		addKeyListener(new KeyInput(this));
-<<<<<<< HEAD
-=======
 		addMouseListener(new MouseInput(this));
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		
 		c.createEnemy(enemy_count);
 	}
@@ -201,10 +180,6 @@ public class Game extends Canvas implements Runnable {
 		{
 			p.render(g);
 			c.render(g);
-<<<<<<< HEAD
-		} else if(State == STATE.MENU) {
-			
-=======
 			
 			g.setColor(Color.green);
 			g.fillRect(0, Game.HEIGHT*2-50, Health*3, 50);
@@ -213,7 +188,6 @@ public class Game extends Canvas implements Runnable {
 			
 		} else if(State == STATE.MENU) {
 			menu.render(g);
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		}
 		
 		
@@ -248,17 +222,6 @@ public class Game extends Canvas implements Runnable {
 		
 		if(State == STATE.GAME) {
 			if (key==KeyEvent.VK_UP) {
-<<<<<<< HEAD
-				p.setVelY(-5);
-			}
-			if (key==KeyEvent.VK_DOWN) {
-				p.setVelY(5);
-			}
-			if (key==KeyEvent.VK_LEFT) {
-				p.setVelX(-5);
-			}
-			if (key==KeyEvent.VK_RIGHT) {
-=======
 				this.is_movingUp = true;
 				p.setVelY(-5);
 			}
@@ -272,7 +235,6 @@ public class Game extends Canvas implements Runnable {
 			}
 			if (key==KeyEvent.VK_RIGHT) {
 				this.is_movingRight = true;
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 				p.setVelX(5);
 			}
 			if(key==KeyEvent.VK_SPACE && !is_shooting) {

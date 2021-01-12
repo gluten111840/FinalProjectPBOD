@@ -6,10 +6,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.game.src.main.classes.EntityA;
-<<<<<<< HEAD
-=======
 import com.game.src.main.classes.EntityB;
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 //import java.io.IOException;
 
 
@@ -18,13 +15,6 @@ public class Player extends GameObject implements EntityA{
 	private double velY;
 
 	private Textures tex;
-<<<<<<< HEAD
-	
-	public Player(double x, double y, Textures tex) {
-		super(x,y);
-		this.tex = tex;
-		
-=======
 	private Game game;
 	private Controller c;
 	
@@ -33,7 +23,6 @@ public class Player extends GameObject implements EntityA{
 		this.tex = tex;
 		this.game = g;
 		this.c=c;
->>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 //		anim = new Animation(tex.player, 3, 3, 1, 1);
 	}
 	
