@@ -40,9 +40,9 @@ public class MouseInput implements MouseListener {
 			} if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=400)&&(my<=460)) {
 				game.setState(2);
 			} 
-//			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=500)&&(my<=560)) {
-//				
-//			}
+			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=500)&&(my<=560)) {
+				System.exit(0);
+			}
 			
 		}
 		if(game.getState()==2) {
