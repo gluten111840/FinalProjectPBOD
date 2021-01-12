@@ -49,8 +49,20 @@ public class Player extends GameObject implements EntityA{
 				c.removeEntity(tempEnt);
 				game.setEnemy_killed(game.getEnemy_killed()+1);
 				Game.Health-=20;
-				if(Game.Health <=0) {
+				if(Game.Health <=0) {	
+					//restart after dying
 					game.setState(0);
+//					for (i=game.eb.size()-1;i>=0;i--) {
+//						c.removeEntity(game.eb.get(i));
+//						
+//					}
+//					for (i=game.ea.size()-1;i>=0;i--) {
+//						c.removeEntity(game.ea.get(i));			
+//					}
+//					game.setEnemy_count(3);		//to trigger spawn enemy
+//					game.setEnemy_killed(3);	//
+//					Game.Health=100;		
+					game.respawn();
 				}
 			}
 				

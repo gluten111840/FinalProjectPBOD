@@ -50,7 +50,8 @@ public class Game extends Canvas implements Runnable {
 	
 	private enum STATE{
 		MENU,
-		GAME
+		GAME,
+		HELP
 	};
 	
 
@@ -81,7 +82,7 @@ public class Game extends Canvas implements Runnable {
 		
 //		SpriteSheet ss = new SpriteSheet(spriteSheet);
 		c = new Controller(tex, this);
-		p = new Player(WIDTH-36,HEIGHT-160,tex,this,c);//*SPAWNPOINT* edit accordingly
+		p = new Player(WIDTH-36,HEIGHT+200,tex,this,c);//*SPAWNPOINT* edit accordingly
 		menu = new Menu();
 		
 		ea = c.getEntityA();
@@ -89,6 +90,8 @@ public class Game extends Canvas implements Runnable {
 		
 		addKeyListener(new KeyInput(this));
 		addMouseListener(new MouseInput(this));
+		
+	
 		
 		c.createEnemy(enemy_count);
 	}
@@ -215,6 +218,22 @@ public class Game extends Canvas implements Runnable {
 
 	public void setEnemy_killed(int enemy_killed) {
 		this.enemy_killed = enemy_killed;
+	}
+	
+	public void respawn() {
+		p.setX(WIDTH-36);
+		p.setY(HEIGHT+200);
+		for (int i=eb.size()-1;i>=0;i--) {
+			c.removeEntity(eb.get(i));
+			
+		}
+		for (int i=ea.size()-1;i>=0;i--) {
+			c.removeEntity(ea.get(i));			
+		}
+		setEnemy_count(3);		//to trigger spawn enemy
+		setEnemy_killed(3);		//
+		Game.Health=100;		
+		
 	}
 
 	public void keyPressed(KeyEvent e) {

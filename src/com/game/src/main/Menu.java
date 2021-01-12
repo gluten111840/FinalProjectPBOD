@@ -10,7 +10,7 @@ public class Menu {
 	
 	private Rectangle playButton = new Rectangle(Game.WIDTH-80,300,150,60);
 	private Rectangle helpButton = new Rectangle(Game.WIDTH-80,400,150,60);
-	private Rectangle quitButton = new Rectangle(Game.WIDTH-80,500,150,60);
+//	private Rectangle quitButton = new Rectangle(Game.WIDTH-80,500,150,60);
 	
 //	public Menu() {
 //
@@ -25,11 +25,11 @@ public class Menu {
 		g.drawString("Space Warrior", Game.WIDTH-160, 150);
 		g.drawString("Play", playButton.x+25, playButton.y+45);
 		g.drawString("Help", playButton.x+25, helpButton.y+45);
-		g.drawString("Quit", playButton.x+25, quitButton.y+45);
+//		g.drawString("Quit", playButton.x+25, quitButton.y+45);
 		
 		g2d.draw(playButton);
 		g2d.draw(helpButton);
-		g2d.draw(quitButton);
+//		g2d.draw(quitButton);
 	}
 
 }
