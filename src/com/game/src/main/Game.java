@@ -47,20 +47,24 @@ public class Game extends Canvas implements Runnable {
 	private Textures tex;
 	private Menu menu;
 	private Help help;
-	
+	private Pause pause;
 	public LinkedList<EntityA> ea;
 	public LinkedList<EntityB> eb;
 	
-	private enum STATE{
+	public enum STATE{
 		MENU,
 		GAME,
-		HELP
+		HELP,
+		PAUSE
 	};
 	
 
 	private STATE State = STATE.MENU;
 	
 	public void setState(int x) {
+		if(x==3) {
+			this.State = STATE.PAUSE;
+		}
 		if(x==2) {
 			this.State = STATE.HELP;
 		}
@@ -70,6 +74,19 @@ public class Game extends Canvas implements Runnable {
 		if(x==0) {
 			this.State=STATE.MENU;
 		}
+	}
+	
+	public int getState() {
+		if (State == STATE.MENU) {
+			return 0;
+		}else if (State == STATE.GAME) {
+			return 1;
+		}else if (State == STATE.HELP) {
+			return 2;
+		}else if (State == STATE.PAUSE) {
+			return 3;
+		}
+		return 0;
 	}
 	
 	public void init() {
@@ -90,6 +107,8 @@ public class Game extends Canvas implements Runnable {
 		c = new Controller(tex, this);
 		p = new Player(WIDTH-36,HEIGHT+200,tex,this,c);//*SPAWNPOINT* edit accordingly
 		menu = new Menu();
+		help = new Help();
+		pause = new Pause();
 		
 		ea = c.getEntityA();
 		eb = c.getEntityB();
@@ -101,6 +120,7 @@ public class Game extends Canvas implements Runnable {
 		
 		c.createEnemy(enemy_count);
 	}
+	
 	
 	private synchronized void start() {
 		if(running)
@@ -203,6 +223,8 @@ public class Game extends Canvas implements Runnable {
 			menu.render(g);
 		} else if(State == STATE.HELP) {
 			help.render(g);
+		} else if(State == STATE.PAUSE) {
+			pause.render(g);
 		}
 		
 		
@@ -280,6 +302,9 @@ public class Game extends Canvas implements Runnable {
 			if(key==KeyEvent.VK_SPACE && !is_shooting) {
 				is_shooting = true;
 				c.addEntity(new Bullet(p.getX(),p.getY(),tex, this));
+			}
+			if(key==KeyEvent.VK_ESCAPE) {
+				setState(3);
 			}
 		}
 	}
