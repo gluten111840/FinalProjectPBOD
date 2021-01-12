@@ -37,6 +37,7 @@ public class Enemy extends GameObject implements EntityB {
 				c.removeEntity(tempent);			//remove bullet on collision
 				c.removeEntity(this);
 				game.setEnemy_killed(game.getEnemy_killed()+1);
+				game.setSkor(game.getSkor()+5);
 			}
 		}
 		

@@ -48,6 +48,7 @@ public class Player extends GameObject implements EntityA{
 			if (Physics.Collision(this, tempEnt)) {
 				c.removeEntity(tempEnt);
 				game.setEnemy_killed(game.getEnemy_killed()+1);
+				game.setSkor(game.getSkor()-5);
 				Game.Health-=20;
 				if(Game.Health <=0) {	
 					//restart after dying

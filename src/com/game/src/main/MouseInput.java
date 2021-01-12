@@ -1,6 +1,5 @@
 package com.game.src.main;
 
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -34,6 +33,8 @@ public class MouseInput implements MouseListener {
 		int my = arg0.getY();
 		if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=300)&&(my<=360)) {
 			game.setState(1);
+		} if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=240)&&(my<=300)) {
+			game.setState(2);
 		}
 		
 	}

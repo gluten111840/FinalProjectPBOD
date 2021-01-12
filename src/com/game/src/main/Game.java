@@ -3,6 +3,7 @@ package com.game.src.main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -39,11 +40,13 @@ public class Game extends Canvas implements Runnable {
 	
 	private int enemy_count = 5;
 	private int enemy_killed = 0;
+	private int skor = 0;
 	
 	private Player p;
 	private Controller c;
 	private Textures tex;
 	private Menu menu;
+	private Help help;
 	
 	public LinkedList<EntityA> ea;
 	public LinkedList<EntityB> eb;
@@ -58,6 +61,9 @@ public class Game extends Canvas implements Runnable {
 	private STATE State = STATE.MENU;
 	
 	public void setState(int x) {
+		if(x==2) {
+			this.State = STATE.HELP;
+		}
 		if(x==1) {
 			this.State= STATE.GAME;
 		}
@@ -188,9 +194,15 @@ public class Game extends Canvas implements Runnable {
 			g.fillRect(0, Game.HEIGHT*2-50, Health*3, 50);
 			g.setColor(Color.gray);
 			g.drawRect(0, Game.HEIGHT*2-50, 300, 50);
+			Font font = new Font("arial",Font.BOLD,35);
+			g.setFont(font);
+			g.setColor(Color.white);
+			g.drawString("SCORE : " + Integer.toString(skor),20,50);
 			
 		} else if(State == STATE.MENU) {
 			menu.render(g);
+		} else if(State == STATE.HELP) {
+			help.render(g);
 		}
 		
 		
@@ -220,6 +232,14 @@ public class Game extends Canvas implements Runnable {
 		this.enemy_killed = enemy_killed;
 	}
 	
+	public int getSkor() {
+		return skor;
+	}
+
+	public void setSkor(int skor) {
+		this.skor = skor;
+	}
+
 	public void respawn() {
 		p.setX(WIDTH-36);
 		p.setY(HEIGHT+200);
@@ -232,7 +252,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		setEnemy_count(3);		//to trigger spawn enemy
 		setEnemy_killed(3);		//
-		Game.Health=100;		
+		Game.Health=100;	
+		skor = 0;
 		
 	}
 
