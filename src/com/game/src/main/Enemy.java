@@ -4,6 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+<<<<<<< HEAD
+=======
+import com.game.src.main.classes.EntityA;
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 import com.game.src.main.classes.EntityB;
 
 public class Enemy extends GameObject implements EntityB {
@@ -20,6 +24,10 @@ public class Enemy extends GameObject implements EntityB {
 		this.tex = tex;
 		this.c = c;
 		this.game = game;
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	}
 
 	public void tick() {
@@ -27,6 +35,7 @@ public class Enemy extends GameObject implements EntityB {
 		
 		if(y > (Game.HEIGHT * Game.SCALE)) {
 			y = 0;
+<<<<<<< HEAD
 			x = r.nextInt(Game.WIDTH * Game.SCALE);
 		}
 		
@@ -38,6 +47,25 @@ public class Enemy extends GameObject implements EntityB {
 	
 	public void render(Graphics g) {
 		g.drawImage(tex.enemy, (int)x, (int)y, null);
+=======
+			x = r.nextInt(Game.WIDTH * Game.SCALE)-64;   //-64 adjust for texture 
+		}
+		for(int i=0;i< game.ea.size();i++) {
+			EntityA tempent = game.ea.get(i);
+			if(Physics.Collision(this, tempent)) {
+				c.removeEntity(tempent);			//remove bullet on collision
+				c.removeEntity(this);
+				game.setEnemy_killed(game.getEnemy_killed()+1);
+			}
+		}
+		
+	}
+	
+	public void render(Graphics g) {
+		
+		g.drawImage(tex.enemy, (int)x, (int)y, null);
+		
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	}
 	
 	public Rectangle getBounds() {

@@ -19,9 +19,15 @@ public class Bullet extends GameObject implements EntityA {
 	public void tick() {
 		this.y-=5;
 		
+<<<<<<< HEAD
 		if(Physics.Collision(this, game.eb)) {
 			System.out.println("COLLISION DETECTED");
 		}
+=======
+//		if(Physics.Collision(this, game.eb)) {			//edit parameter
+//			System.out.println("COLLISION DETECTED");
+//		}
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		
 	}
 	
@@ -30,7 +36,11 @@ public class Bullet extends GameObject implements EntityA {
 	}
 	
 	public Rectangle getBounds() {
+<<<<<<< HEAD
 		return new Rectangle((int)x, (int)y, 64, 64);
+=======
+		return new Rectangle((int)x+28, (int)y, 4, 32);
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	}
 	
 	public double getX() {

@@ -24,7 +24,11 @@ public class Controller {
 	
 	public void createEnemy(int enemy_count) {
 		for(int i=0;i<enemy_count;i++) {
+<<<<<<< HEAD
 			addEntity(new Enemy(r.nextInt(640), -10, tex, this, game));
+=======
+			addEntity(new Enemy(r.nextInt(Game.WIDTH*2-64), -10, tex, this, game)); //-64 adjust for texture 
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		}
 	}
 	

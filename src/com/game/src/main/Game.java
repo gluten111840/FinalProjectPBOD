@@ -1,6 +1,7 @@
 package com.game.src.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 640;
 	public static final int HEIGHT = 380;
 	public static final int SCALE = 2;
+	public static int Health = 100;
 	public final String TITLE = "Space Warrior";
 	
 	private boolean running = false;
@@ -30,6 +32,13 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background = null;
 	
 	private boolean is_shooting = false;
+<<<<<<< HEAD
+=======
+	private boolean is_movingRight = false;
+	private boolean is_movingLeft = false;
+	private boolean is_movingUp = false;
+	private boolean is_movingDown = false;
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	
 	private int enemy_count = 5;
 	private int enemy_killed = 0;
@@ -41,6 +50,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public LinkedList<EntityA> ea;
 	public LinkedList<EntityB> eb;
+<<<<<<< HEAD
 	
 	private enum STATE{
 		MENU,
@@ -48,6 +58,25 @@ public class Game extends Canvas implements Runnable {
 	};
 	
 	private STATE State = STATE.MENU;
+=======
+	
+	private enum STATE{
+		MENU,
+		GAME
+	};
+	
+
+	private STATE State = STATE.MENU;
+	
+	public void setState(int x) {
+		if(x==1) {
+			this.State= STATE.GAME;
+		}
+		if(x==0) {
+			this.State=STATE.MENU;
+		}
+	}
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 	
 	public void init() {
 		requestFocus();
@@ -64,14 +93,23 @@ public class Game extends Canvas implements Runnable {
 		tex = new Textures(this);
 		
 //		SpriteSheet ss = new SpriteSheet(spriteSheet);
+<<<<<<< HEAD
 		p = new Player(WIDTH-36,HEIGHT-160,tex);//*SPAWNPOINT* edit accordingly
 		c = new Controller(tex, this);
+=======
+		c = new Controller(tex, this);
+		p = new Player(WIDTH-36,HEIGHT-160,tex,this,c);//*SPAWNPOINT* edit accordingly
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		menu = new Menu();
 		
 		ea = c.getEntityA();
 		eb = c.getEntityB();
 		
 		addKeyListener(new KeyInput(this));
+<<<<<<< HEAD
+=======
+		addMouseListener(new MouseInput(this));
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		
 		c.createEnemy(enemy_count);
 	}
@@ -163,8 +201,19 @@ public class Game extends Canvas implements Runnable {
 		{
 			p.render(g);
 			c.render(g);
+<<<<<<< HEAD
 		} else if(State == STATE.MENU) {
 			
+=======
+			
+			g.setColor(Color.green);
+			g.fillRect(0, Game.HEIGHT*2-50, Health*3, 50);
+			g.setColor(Color.gray);
+			g.drawRect(0, Game.HEIGHT*2-50, 300, 50);
+			
+		} else if(State == STATE.MENU) {
+			menu.render(g);
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 		}
 		
 		
@@ -199,6 +248,7 @@ public class Game extends Canvas implements Runnable {
 		
 		if(State == STATE.GAME) {
 			if (key==KeyEvent.VK_UP) {
+<<<<<<< HEAD
 				p.setVelY(-5);
 			}
 			if (key==KeyEvent.VK_DOWN) {
@@ -208,6 +258,21 @@ public class Game extends Canvas implements Runnable {
 				p.setVelX(-5);
 			}
 			if (key==KeyEvent.VK_RIGHT) {
+=======
+				this.is_movingUp = true;
+				p.setVelY(-5);
+			}
+			if (key==KeyEvent.VK_DOWN) {
+				this.is_movingDown = true;
+				p.setVelY(5);
+			}
+			if (key==KeyEvent.VK_LEFT) {
+				this.is_movingLeft = true;
+				p.setVelX(-5);
+			}
+			if (key==KeyEvent.VK_RIGHT) {
+				this.is_movingRight = true;
+>>>>>>> 6558e54eb5a835bc0a78ff4dd8419699a65570d3
 				p.setVelX(5);
 			}
 			if(key==KeyEvent.VK_SPACE && !is_shooting) {
@@ -217,20 +282,44 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) {		//Smoother keystroke
 		int key = e.getKeyCode();
 		
 		if (key==KeyEvent.VK_UP) {
-			p.setVelY(0);
+			this.is_movingUp = false;
+			if(!is_movingDown) {
+				p.setVelY(0);
+			}
+			else {
+				p.setVelY(5);
+			}
 		}
 		if (key==KeyEvent.VK_DOWN) {
-			p.setVelY(0);
+			this.is_movingDown = false;
+			if(!is_movingUp) {
+				p.setVelY(0);
+			}
+			else {
+				p.setVelY(-5);
+			}
 		}
 		if (key==KeyEvent.VK_LEFT) {
-			p.setVelX(0);
+			this.is_movingLeft = false;
+			if(!is_movingRight) {
+				p.setVelX(0);
+			}
+			else {
+				p.setVelX(5);
+			}
 		}
 		if (key==KeyEvent.VK_RIGHT) {
-			p.setVelX(0);
+			this.is_movingRight = false;
+			if(!is_movingLeft) {
+				p.setVelX(0);
+			}
+			else {
+				p.setVelX(-5);
+			}
 		}
 		if(key==KeyEvent.VK_SPACE) {
 			is_shooting = false;
