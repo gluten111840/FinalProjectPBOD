@@ -4,10 +4,13 @@ package com.game.src.main;
 //import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.File;
 
 import com.game.src.main.classes.EntityA;
 import com.game.src.main.classes.EntityB;
 //import java.io.IOException;
+
+import jaco.mp3.player.MP3Player;
 
 
 public class Player extends GameObject implements EntityA{
@@ -18,14 +21,29 @@ public class Player extends GameObject implements EntityA{
 	private Game game;
 	private Controller c;
 	
+	public static final String explode = "res/explode.mp3";
+	
+	private int score = 0;
+	
+	MP3Player bruk = new MP3Player(new File(explode));
+	
 	public Player(double x, double y, Textures tex,Game g,Controller c) {
 		super(x,y);
 		this.tex = tex;
 		this.game = g;
 		this.c=c;
+		this.score = 0;
 //		anim = new Animation(tex.player, 3, 3, 1, 1);
 	}
 	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	public void tick() {
 //		this.x++;
 		this.x= x+velX;
@@ -46,13 +64,14 @@ public class Player extends GameObject implements EntityA{
 		for (int i=0;i< game.eb.size();i++) {
 			EntityB tempEnt = game.eb.get(i);
 			if (Physics.Collision(this, tempEnt)) {
+				bruk.play();
 				c.removeEntity(tempEnt);
 				game.setEnemy_killed(game.getEnemy_killed()+1);
-				game.setSkor(game.getSkor()-5);
+				game.getPlayer().setScore(game.getPlayer().getScore()-5);
 				Game.Health-=20;
 				if(Game.Health <=0) {	
 					//restart after dying
-					game.setState(0);
+					game.setState(5);
 //					for (i=game.eb.size()-1;i>=0;i--) {
 //						c.removeEntity(game.eb.get(i));
 //						
@@ -62,7 +81,7 @@ public class Player extends GameObject implements EntityA{
 //					}
 //					game.setEnemy_count(3);		//to trigger spawn enemy
 //					game.setEnemy_killed(3);	//
-//					Game.Health=100;		
+//					Game.Health=100;
 					game.respawn();
 				}
 			}

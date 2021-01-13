@@ -2,10 +2,13 @@ package com.game.src.main;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.File;
 import java.util.Random;
 
 import com.game.src.main.classes.EntityA;
 import com.game.src.main.classes.EntityB;
+
+import jaco.mp3.player.MP3Player;
 
 public class Enemy extends GameObject implements EntityB {
 
@@ -13,6 +16,9 @@ public class Enemy extends GameObject implements EntityB {
 	private Textures tex;
 	private Game game;
 	private Controller c;
+	public static final String explode = "res/explode.mp3";
+	
+	MP3Player bruk = new MP3Player(new File(explode));
 	
 	private int speed = (r.nextInt(3)+1);
 	
@@ -34,12 +40,14 @@ public class Enemy extends GameObject implements EntityB {
 		for(int i=0;i< game.ea.size();i++) {
 			EntityA tempent = game.ea.get(i);
 			if(Physics.Collision(this, tempent)) {
+				bruk.play();
 				c.removeEntity(tempent);			//remove bullet on collision
 				c.removeEntity(this);
 				game.setEnemy_killed(game.getEnemy_killed()+1);
-				game.setSkor(game.getSkor()+5);
+				game.getPlayer().setScore(game.getPlayer().getScore()+5);
 			}
 		}
+		
 		
 	}
 	

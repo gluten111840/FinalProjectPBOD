@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="res"/>
+	<classpathentry excluding="sound_effect/" kind="src" path="res"/>
+	<classpathentry kind="lib" path="src/com/game/src/main/jaco-mp3-player-0.9.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

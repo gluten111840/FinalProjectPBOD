@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.game.src.main.classes.EntityA;
 import com.game.src.main.classes.EntityB;
@@ -48,20 +49,33 @@ public class Game extends Canvas implements Runnable {
 	private Menu menu;
 	private Help help;
 	private Pause pause;
+	private ScoreManager sm = new ScoreManager(this);
 	public LinkedList<EntityA> ea;
 	public LinkedList<EntityB> eb;
+	
+	private boolean scoreSubmitted = false;
+	
+	private int totalScore;
 	
 	public enum STATE{
 		MENU,
 		GAME,
 		HELP,
-		PAUSE
+		PAUSE,
+		HIGHSCORES,
+		GAMEOVER
 	};
 	
 
 	private STATE State = STATE.MENU;
 	
 	public void setState(int x) {
+		if(x==5) {
+			this.State = STATE.GAMEOVER;
+		}
+		if(x==4) {
+			this.State = STATE.HIGHSCORES;
+		}
 		if(x==3) {
 			this.State = STATE.PAUSE;
 		}
@@ -85,6 +99,10 @@ public class Game extends Canvas implements Runnable {
 			return 2;
 		}else if (State == STATE.PAUSE) {
 			return 3;
+		}else if (State == STATE.HIGHSCORES) {
+			return 4;
+		}else if (State == STATE.GAMEOVER) {
+			return 5;
 		}
 		return 0;
 	}
@@ -110,6 +128,8 @@ public class Game extends Canvas implements Runnable {
 		help = new Help();
 		pause = new Pause();
 		
+		scoreSubmitted = false;
+		
 		ea = c.getEntityA();
 		eb = c.getEntityB();
 		
@@ -117,7 +137,6 @@ public class Game extends Canvas implements Runnable {
 		addMouseListener(new MouseInput(this));
 		
 	
-		
 		c.createEnemy(enemy_count);
 	}
 	
@@ -181,6 +200,9 @@ public class Game extends Canvas implements Runnable {
 		{
 			p.tick();
 			c.tick();
+			totalScore = (int)p.getScore();
+			sm.tick();
+			
 		}
 			
 		
@@ -209,7 +231,7 @@ public class Game extends Canvas implements Runnable {
 		{
 			p.render(g);
 			c.render(g);
-			
+			sm.render(g);
 			g.setColor(Color.green);
 			g.fillRect(0, Game.HEIGHT*2-50, Health*3, 50);
 			g.setColor(Color.gray);
@@ -217,7 +239,6 @@ public class Game extends Canvas implements Runnable {
 			Font font = new Font("arial",Font.BOLD,35);
 			g.setFont(font);
 			g.setColor(Color.white);
-			g.drawString("SCORE : " + Integer.toString(skor),20,50);
 			
 		} else if(State == STATE.MENU) {
 			menu.render(g);
@@ -225,6 +246,10 @@ public class Game extends Canvas implements Runnable {
 			help.render(g);
 		} else if(State == STATE.PAUSE) {
 			pause.render(g);
+		} else if(State == STATE.GAMEOVER) {
+			drawGameOver(g);
+		} else if(State == STATE.HIGHSCORES) {
+			sm.renderHOF(g);
 		}
 		
 		
@@ -234,10 +259,22 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 	
+	public Player getPlayer() {
+		return this.p;
+	}
+	
 	public BufferedImage getSpriteSheet() {
 		return spriteSheet;
 	}
 	
+	public boolean isScoreSubmitted() {
+		return scoreSubmitted;
+	}
+
+	public void setScoreSubmitted(boolean scoreSubmitted) {
+		this.scoreSubmitted = scoreSubmitted;
+	}
+
 	public int getEnemy_count() {
 		return enemy_count;
 	}
@@ -261,6 +298,14 @@ public class Game extends Canvas implements Runnable {
 	public void setSkor(int skor) {
 		this.skor = skor;
 	}
+	
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
 
 	public void respawn() {
 		p.setX(WIDTH-36);
@@ -275,7 +320,7 @@ public class Game extends Canvas implements Runnable {
 		setEnemy_count(3);		//to trigger spawn enemy
 		setEnemy_killed(3);		//
 		Game.Health=100;	
-		skor = 0;
+//		p.setScore() = 0;
 		
 	}
 
@@ -306,7 +351,52 @@ public class Game extends Canvas implements Runnable {
 			if(key==KeyEvent.VK_ESCAPE) {
 				setState(3);
 			}
+		} else if(State == STATE.GAMEOVER) {
+			if(key==KeyEvent.VK_SPACE) {
+				if(!scoreSubmitted) {
+					sm.addScore(JOptionPane.showInputDialog("Input Your Name"), totalScore);
+					scoreSubmitted = true;
+				}
+			} else if(key==KeyEvent.VK_ESCAPE) {
+				State = STATE.MENU;
+				init();
+			}
+		} else if(State == STATE.HIGHSCORES) {
+			if(key==KeyEvent.VK_ESCAPE) {
+				State = STATE.MENU;
+				init();
+			}
+		} else if(State == STATE.HELP) {
+			if(key==KeyEvent.VK_ESCAPE) {
+				State = STATE.MENU;
+				init();
+			}
 		}
+	}
+	
+	public void drawGameOver(Graphics g) {
+		Font title = new Font("SanSerif", Font.BOLD,66);
+		g.setFont(title);
+		g.setColor(Color.WHITE);
+		g.drawString("GameOver", Game.WIDTH/2-150, 100);
+		Font word = new Font("SanSerif", Font.BOLD,46);
+		g.setFont(word);
+		String stringScore = " "+totalScore;
+		g.drawString("Your score is"+stringScore , Game.WIDTH/2-90, 200);
+		if(sm.isTopTen(totalScore)) {
+			if(totalScore>=sm.getCurrentHS()) {
+				g.drawString("You got a new HighScore", Game.WIDTH/2-90, 250);
+				
+			}
+			else {
+				g.drawString("You rank in top 10", Game.WIDTH/2-90, 250);
+			}	
+			if(!scoreSubmitted) {
+				g.drawString("Please press space to input your name", Game.WIDTH/2-90, 300);
+			}
+		}
+		g.drawString("Please Esc to return to main menu", Game.WIDTH/2-90, 400);
+		
 	}
 	
 	public void keyReleased(KeyEvent e) {		//Smoother keystroke

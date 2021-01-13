@@ -38,17 +38,13 @@ public class MouseInput implements MouseListener {
 			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=300)&&(my<=360)) {
 				game.setState(1);
 			} if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=400)&&(my<=460)) {
+				game.setState(4);
+			} if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=500)&&(my<=560)) {
 				game.setState(2);
-			} 
-			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=500)&&(my<=560)) {
+			} if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=600)&&(my<=660)) {
 				System.exit(0);
 			}
 			
-		}
-		if(game.getState()==2) {
-			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=300)&&(my<=360)) {
-				game.setState(0);
-			}
 		}
 		if(game.getState()==3) {
 			if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=300)&&(my<=360)) {
@@ -56,7 +52,7 @@ public class MouseInput implements MouseListener {
 			}if((mx>= Game.WIDTH-80)&&(mx<=Game.WIDTH+70)&&(my>=400)&&(my<=460)) {
 				game.setState(0);
 			}
-		}	
+		}
 	}
 
 	@Override
