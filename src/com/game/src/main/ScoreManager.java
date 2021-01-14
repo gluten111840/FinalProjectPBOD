@@ -43,7 +43,7 @@ public class ScoreManager {
     }
     //sorting arraylist
     private void sort() {
-        ScoreComparator comparator = new ScoreComparator();
+        ScoreComparator comparator = new ScoreComparator(activeScore);
         Collections.sort(scores, comparator);
     }
     //adding score
@@ -161,7 +161,7 @@ public class ScoreManager {
 			}
 			
 			
-			//g2d.draw(new Rectangle(Game.w/2-100,150+i*50,200,50));
+			//g2d.draw(new Rectangle(Game.WIDTH/2-100,150+i*50,200,50));
 			g.drawString(cetak, Game.WIDTH/2-100, 150+i*50+55);
 		}
     }
